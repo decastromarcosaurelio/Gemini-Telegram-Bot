@@ -79,7 +79,8 @@ async def main():
     # Start bot
     print("Starting Gemini_Telegram_Bot polling...")
     try:
-        await bot.polling(none_stop=True, timeout=60, long_polling_timeout = 60) # Added timeout parameters
+        # Removed 'long_polling_timeout' as it caused a TypeError
+        await bot.polling(none_stop=True, timeout=60)
     except Exception as e:
         print(f"Error during polling: {e}")
         traceback.print_exc() # Print full traceback for polling errors
