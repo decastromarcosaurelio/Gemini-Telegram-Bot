@@ -18,6 +18,17 @@ print("Arg parse done.")
 async def main():
     # Init bot
     bot = AsyncTeleBot(options.tg_token)
+
+    # Delete webhook before starting polling to avoid conflict
+    # This is the key change to address the error
+    try:
+        await bot.delete_webhook()
+        print("Webhook deleted successfully.")
+    except Exception as e:
+        print(f"Error deleting webhook: {e}")
+        # Depending on the error, you might want to decide if you should proceed or not.
+        # For now, we'll let it try to poll anyway.
+
     await bot.delete_my_commands(scope=None, language_code=None)
     await bot.set_my_commands(
     commands=[
